@@ -13,7 +13,11 @@
 ## Introduction
 Grasshopper is a powerful visual programming language and environment that is widely used in the fields of architecture, design, engineering, and computational design. The ghPython plugin allows you to leverage the flexibility and expressiveness of Python within Grasshopper, enabling you to create custom components and automate various tasks.
 
-This repository serves as a central hub for sharing and distributing ghPython components created by the community. It aims to foster collaboration, knowledge sharing, and innovation, allowing users to learn from each other and accelerate their Grasshopper workflows.
+This repository serves as a central hub for sharing and distributing ghPython components created by the community. It aims to foster collaboration, knowledge sharing, and innovation, allowing users to learn from each other and accelerate their Grasshopper workflows. For now there is no general theme in terms of the "types" of components or the catagory of problems they intend to solve, see it as a brain dump for anything usefull combination of operations or algorythms that you might find kind of nifty.
+
+## Why not compiled c# plugins you might ask?
+Well, transparency. And yes I could have made the repo open source aswell allowing you to look at all the fancy pancy c# code I have written but I think having access to the code IN THE ENVIRONMENT that you are working in makes it all the more transparent and easily modifiable and deployable without needed to build any solutions. Disclaimer, this is not a dis on c# plugins, they are awesome, but thats not what this repo is intended to serve. :D
+
 
 ## Getting Started
 To get started with the ghPython components in this repository, follow these steps:
