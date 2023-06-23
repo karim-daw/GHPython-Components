@@ -47,7 +47,6 @@ This repository organizes ghPython components into several categories to facilit
 - Geometry: Components related to geometric operations, transformations, and calculations.
 - Data Manipulation: Components for manipulating and analyzing data in Grasshopper.
 - Automation: Components that automate repetitive tasks or complex workflows.
-- [Add more categories as needed...]
 
 Feel free to navigate through the repository and explore the components in each category. If you have ideas for additional categories or suggestions for improvement, we welcome your feedback!
 
