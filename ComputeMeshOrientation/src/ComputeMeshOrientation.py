@@ -11,12 +11,12 @@ drag+drop 24x24 pixel png onto component. Save them under L:\TOOLS\SOURCECODE\Ic
     Remarks:
         Author: Karim Daw
         License: Apache License 2.0
-        Version: 230116
+        Version: 230629
 """
 
 ghenv.Component.Name = "ComputeMeshOrientation"
 ghenv.Component.NickName = "CMO"
-ghenv.Component.Category = "BIG-Sustainability"
+ghenv.Component.Category = "KD-Tools"
 ghenv.Component.SubCategory = "Mesh"
 
 # If you want to give the component a version number etc.
