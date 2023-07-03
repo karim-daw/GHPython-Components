@@ -14,9 +14,11 @@ drag+drop 24x24 pixel png onto component. Save them under L:\TOOLS\SOURCECODE\Ic
         Version: 230629
 """
 
-import Rhino.Geometry as rg
-import math
 import time
+import math
+import Rhino.Geometry as rg
+
+
 ghenv.Component.Name = "ComputeMeshOrientation"
 ghenv.Component.NickName = "CMO"
 ghenv.Component.Category = "KD-Tools"
@@ -29,6 +31,7 @@ ghenv.Component.Message = time.strftime(
 
 
 def arcTanToDegrees(arcTan):
+    """converts arcTangents to degrees to two decimals places"""
     degree = (arcTan * 180) / math.pi
     degree = round(degree, 2)
     return degree
