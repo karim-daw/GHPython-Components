@@ -10,9 +10,10 @@ the same as the name of one of the .py files.
     Outputs:
         UpdatedComponentNames: List of GHPython component names that either need to be update, or have been updated updated {list,str}
     Remarks:
-        Author: Karim Daw
+        Author: Anders Holden Deleuran
+        Contributor: Karim Daw
         License: Apache License 2.0
-        Version: 230411
+        Version: 230704
 """
 
 ghenv.Component.Name = "UpdateGHPythonSourceCode"
