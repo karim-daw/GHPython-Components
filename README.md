@@ -87,3 +87,8 @@ Here are some additional resources and references to help you explore further:
 - [Grasshopper Python Scripting Reference](https://developer.rhino3d.com/api/grasshopper/html/N_Grasshopper.htm)
 
 Happy scripting and enjoy the world of Grasshopper Python Components!
+
+## Credits, contributors
+A lot of this work would not have been possible if it were not for the help of these awesome individuals
+Anders Holden Deleuran
+...
