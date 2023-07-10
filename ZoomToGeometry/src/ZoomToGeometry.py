@@ -16,8 +16,10 @@ Write main component documentation here.
 
 ghenv.Component.Name = "ZoomToGeometry"
 ghenv.Component.NickName ="ZTG"
-ghenv.Component.Category = "BIG-Sustainability"
+ghenv.Component.Category = "FWDT-Tools"
 ghenv.Component.SubCategory = "Display"
+
+#test
 
 import Rhino as rc
 

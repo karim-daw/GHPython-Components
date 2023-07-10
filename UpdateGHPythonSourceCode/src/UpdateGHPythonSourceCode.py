@@ -13,7 +13,7 @@ the same as the name of one of the .py files.
         Author: Anders Holden Deleuran
         Contributor: Karim Daw
         License: Apache License 2.0
-        Version: 230704
+        Version: 230411
 """
 
 ghenv.Component.Name = "UpdateGHPythonSourceCode"
