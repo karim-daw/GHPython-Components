@@ -10,9 +10,9 @@ Colors the groups in the Grasshopper document based on the provided parameters.
     Outputs:
         Null
     Remarks:
-        Author: Karim Daw
+        Author: Karim Daw (Gensler DT)
         License: Apache License 2.0
-        Version: 230710
+        Version: 230613
 """
 
 ghenv.Component.Name = "GroupComponentsByColor"
