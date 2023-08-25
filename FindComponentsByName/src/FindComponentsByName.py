@@ -22,19 +22,72 @@ ghenv.Component.SubCategory = "Utilities"
 import rhinoscriptsyntax as rs
 import Grasshopper as gh
 
+# logging imports
+import os
+import csv
+import time
+import datetime
+import System.Environment as env
+
+# loggig path
+csv_path = r'C:\Users\43310\OneDrive - Gensler\gh_scripts\_tracker\logging.csv'
+
+# define logging function
+def log_function(script_name, csv_path):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            
+            start_time = time.time()
+            result = None
+            error_message = None
+
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                error_message = str(e)
+            end_time = time.time()
+
+            runtime = end_time - start_time
+            current_time = datetime.datetime.now()
+            username = env.UserName
+
+            file_exists = os.path.exists(csv_path)
+            with open(csv_path, mode='ab') as csv_file:
+                csv_writer = csv.writer(csv_file)
+                if not file_exists:
+                    print(error_message)
+                    csv_writer.writerow(["Script Name", "Timestamp", "Runtime", "Username", "Error"])
+                csv_writer.writerow([script_name, current_time, runtime, username, error_message])
+                
+            # close file
+            csv_file.close()
+            
+            return result
+        return wrapper
+    return decorator
+
+
 # Make GH component warning handler
 wh = gh.Kernel.GH_RuntimeMessageLevel.Warning
 
+@log_function(ghenv.Component.Name, csv_path)
+def findComponentByName(component_names):
+    component_count = {}  
+    
+    try:
+        # Loop through all components
+        for obj in ghenv.Component.OnPingDocument().Objects:
+            for cmpName in component_names:
+                if obj.Name == cmpName:
+                    component_count[cmpName] = component_count.get(cmpName, 0) + 1
+                    obj.AddRuntimeMessage(wh, "Hello! You found me!")
+
+        for name, count in component_count.items():
+            print("I found {} component(s) with the name: {}".format(count, name))
+    except Exception as e:
+        print("An error occurred:", str(e))
+
 if Run and ComponentNames:
-    component_count = {}  # Using a more descriptive name for the dictionary
-    
-    # Loop through all components
-    for obj in ghenv.Component.OnPingDocument().Objects:
-        for cmpName in ComponentNames:
-            if obj.Name == cmpName:
-                component_count[cmpName] = component_count.get(cmpName, 0) + 1
-                obj.AddRuntimeMessage(wh, "Hello! You found me!")
-    
-    for name, count in component_count.items():
-        print("I found {} component(s) with the name: {}".format(count, name))
+    findComponentByName(ComponentNames)
+
 
