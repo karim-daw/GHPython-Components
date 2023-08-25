@@ -32,7 +32,7 @@ import datetime
 import System.Environment as env
 
 # loggig path
-csv_path = r'C:\Users\43310\OneDrive - Gensler\gh_scripts\_tracker\logging.csv'
+csv_path = r'\\Gensler.ad\Offices\London\Committees\Design Technology Studio\4_Computation\ScriptTracker\_ghCmpTracker\logging.csv'
 
 # define logging function
 def log_function(script_name, csv_path):
