@@ -1,13 +1,18 @@
-"""Provides a scripting component.
-    Inputs:
-        x: The x script variable
-        y: The y script variable
+"""
+Given a desired set of component names, this will iterate the gh document and flag with an orange
+warning handler all the components you desire to find. This can be usefull when looking through
+a large canvas and you need to identify components by name
+
+    Input:
+        ComponentNames: Full name of components you want to flag with a warning {list,str}
+        Run: Run the script {item,bool}
     Output:
-        a: The a output variable"""
-
-__author__ = "43310"
-__version__ = "2023.08.25"
-
+        out: Message with found components
+    Remarks:
+        Author: Karim Daw
+        License: Apache License 2.0
+        Version: 250823
+"""
 
 ghenv.Component.Name = "FindComponentsByName"
 ghenv.Component.NickName = "FCBN"
