@@ -21,30 +21,15 @@ import Grasshopper as gh
 wh = gh.Kernel.GH_RuntimeMessageLevel.Warning
 
 if Run and ComponentNames:
+    component_count = {}  # Using a more descriptive name for the dictionary
     
-    
-
-    
-    # loop through all components
+    # Loop through all components
     for obj in ghenv.Component.OnPingDocument().Objects:
-        
-        # set variables
-        counter = 0
-        foundName = "Null"
-        
-        for i, cmpName in enumerate(ComponentNames):
-            
-            # check if names match
+        for cmpName in ComponentNames:
             if obj.Name == cmpName:
-                
-                # enumerate counter
-                counter += 1
-                counter += i
-                
-                foundName = obj.Name
-                
-                obj.AddRuntimeMessage(wh,"Heloooo You found me!")  
-                    
-    print("I found {} components with the name: {}".format(counter, foundName))
-
+                component_count[cmpName] = component_count.get(cmpName, 0) + 1
+                obj.AddRuntimeMessage(wh, "Hello! You found me!")
+    
+    for name, count in component_count.items():
+        print("I found {} component(s) with the name: {}".format(count, name))
 
