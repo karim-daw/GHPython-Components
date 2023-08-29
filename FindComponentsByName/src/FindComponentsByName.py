@@ -11,7 +11,7 @@ a large canvas and you need to identify components by name
     Remarks:
         Author: Karim Daw
         License: Apache License 2.0
-        Version: 250823
+        Version: 230829
 """
 
 ghenv.Component.Name = "FindComponentsByName"
