@@ -10,9 +10,10 @@ all the code and writes this to .py files.
     Output:
         TLOC: Lines of code in user object {item,int}
     Remarks:
-        Author: Karim Daw
+        Author: Anders Holden Deleuran
+        Contributor: Karim Daw
         License: Apache License 2.0
-        Version: 230710
+        Version: 230411
 """
 ghenv.Component.Name = "ReplaceUserObjectsWithLocal"
 ghenv.Component.NickName = "RUOWL"

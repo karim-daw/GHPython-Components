@@ -1,62 +1,93 @@
 """
-The component appends log data to a file showcasing the usage of the canvas. The
-Intention is to track usage of scripts with this component
-
-    Input:
-        Activate: Boolean to activate tracking 
-    Output:
-        Void
+Sets named Boolean Toggles to False when Grasshopper file opens.
+    Inputs:
+        Toggles: Names of Boolean Toggles to False {list,str}
+        ScriptName: (OPTIONAL) name of script you want to track, by default the
+        component will take the name of the file
+        Activate: Activate to allow the tracker to do its thing, for testing turning it off
+    Outputs:
     Remarks:
         Author: Karim Daw
+        Constributor: Anders Holden Deleuran 
         License: Apache License 2.0
-        Version: 230822
+        Version: 230927
 """
+
+import Grasshopper as gh
+
 ghenv.Component.Name = "UsageTracker"
 ghenv.Component.NickName = "UT"
 ghenv.Component.Category = "FWDT-Tools"
 ghenv.Component.SubCategory = "Tracking"
 
-import time
+# logging imports
 import os
-import Grasshopper as gh
+import csv
+import time
+import datetime
+import System.Environment as env
 
+# loggig path
+csv_path = r'\\Gensler.ad\Offices\London\Committees\Design Technology Studio\4_Computation\ScriptTracker\_ghCmpTracker\logging.csv'
 
-def saveUseLog(_nameOfScript, _versionNumber):
+# define logging function
+def log_function(script_name, csv_path):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            
+            start_time = time.time()
+            result = None
+            error_message = None
+
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                error_message = str(e)
+            end_time = time.time()
+
+            runtime = end_time - start_time
+            current_time = datetime.datetime.now()
+            username = env.UserName
+
+            file_exists = os.path.exists(csv_path)
+            with open(csv_path, mode='ab') as csv_file:
+                csv_writer = csv.writer(csv_file)
+                if not file_exists:
+                    print(error_message)
+                    csv_writer.writerow(["Script Name", "Timestamp", "Runtime", "Username", "Error"])
+                csv_writer.writerow([script_name, current_time, runtime, username, error_message])
+                
+            # close file
+            csv_file.close()
+            
+            return result
+        return wrapper
+    return decorator
+
+if not ScriptName:
+    fileName = ghenv.LocalScope.ghdoc.Path.split("\\")[-1]
+else:
+    fileName = ScriptName
+
+@log_function(fileName, csv_path)
+def dummyFunction():
+    print("Ran function")
+
+# Make persistent variable to check if GH document has opened
+if "ghDocFirstOpen" not in globals():
+    ghDocFirstOpen = True
+
+# Set all named toggles to False
+if Toggles and ghDocFirstOpen and Activate:
     
-    """Utility for saving a log file indicating script was run."""
-
-    # Create a new path based on current timestamp
-    dir_path = r'\\Gensler.ad\Offices\London\Committees\Design Technology Studio\4_Computation\ScriptTracker\\'
-    file_name = 'RhinoTemplateLog_' + str(time.strftime("%Yy%mm%dd-%Hh%Mm%Ss")) + '.txt'
-    full_Path = dir_path + file_name
-    if os.path.isfile(full_Path) is False:
-        logData = ['Gensler FWDT script was used once at ' + str(time.strftime("%Yy%mm%dd-%Hh%Mm%Ss")) + '.']
-        logData.append('ScriptName: ' + str(_nameOfScript))
-        logData.append('Username: ' + str(os.getenv('username')))
-        logData.append('Version: ' + str(_versionNumber))
-        try:
-            with open(full_Path, 'w') as logFile:
-                for line in logData:
-                    logFile.write(line)
-                    logFile.write('\n')
-                logFile.close()
-                return True
-        except:
-            ghenv.Component.AddRuntimeMessage(error, "Unable to access Gensler Server, please contact karim_daw@gensler.com.")
-            return False
-        return True
-    elif os.path.isfile(full_Path) is True:
-        ghenv.Component.AddRuntimeMessage(error, "Failed to create unique name for log file, please try again in 10 seconds.")
-        return False
-
-# Initialize warning handler
-warning = gh.Kernel.GH_RuntimeMessageLevel.Warning
-error = gh.Kernel.GH_RuntimeMessageLevel.Error
-remark = gh.Kernel.GH_RuntimeMessageLevel.Remark
-
-# MAIN
-if Activate:
-    # run script
-if saveUseLog(NameOfScript, VersionNumber) is True:
-    # Place script here
-    pass
+    # run dummy function for tracking
+    dummyFunction()
+    
+    for obj in ghenv.Component.OnPingDocument().Objects:
+        if obj.NickName in Toggles:
+            if type(obj) is gh.Kernel.Special.GH_BooleanToggle:
+                obj.Value = False
+                obj.ExpireSolution(True)
+                
+    # Set flag to false
+    ghDocFirstOpen = False
