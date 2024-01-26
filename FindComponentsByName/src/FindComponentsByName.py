@@ -11,7 +11,7 @@ a large canvas and you need to identify components by name
     Remarks:
         Author: Karim Daw
         License: Apache License 2.0
-        Version: 230829
+        Version: 250823
 """
 
 ghenv.Component.Name = "FindComponentsByName"
@@ -21,6 +21,7 @@ ghenv.Component.SubCategory = "Utilities"
 
 import rhinoscriptsyntax as rs
 import Grasshopper as gh
+from System.Drawing import PointF
 
 # logging imports
 import os
@@ -81,6 +82,9 @@ def findComponentByName(component_names):
                 if obj.Name == cmpName:
                     component_count[cmpName] = component_count.get(cmpName, 0) + 1
                     obj.AddRuntimeMessage(wh, "Hello! You found me!")
+                    gh.Instances.ActiveCanvas.Viewport.Zoom = 10.0
+                    bound = obj.Attributes.Bounds
+                    gh.Instances.ActiveCanvas.Viewport.MidPoint = PointF(bound.X + bound.Width *0.5, bound.Y + bound.Height * 0.5)
 
         for name, count in component_count.items():
             print("I found {} component(s) with the name: {}".format(count, name))
